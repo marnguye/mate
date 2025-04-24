@@ -1,19 +1,29 @@
-import Home from '@/views/Home.vue'
+import { createRouter, createWebHistory } from 'vue-router'
+import HomeView from '../views/HomeView.vue'
+import PostPage from '../views/PostPage.vue'
+import FindPage from '../views/FindPage.vue'
 
 const routes = [
   {
     path: '/',
-    name: 'Home',
-    component: Home
+    name: 'home',
+    component: HomeView
   },
   {
     path: '/post',
-    name: 'Post',
-    component: () => import('@/views/Post.vue')
+    name: 'post',
+    component: PostPage
   },
   {
     path: '/find',
-    name: 'Find',
-    component: () => import('@/views/Find.vue')
+    name: 'find',
+    component: FindPage
   }
 ]
+
+const router = createRouter({
+  history: createWebHistory(process.env.BASE_URL),
+  routes
+})
+
+export default router
