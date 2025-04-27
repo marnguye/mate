@@ -1,0 +1,35 @@
+{
+  "title": "Spacious room in the centre of Prague",
+  "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+  "images": {
+    "main": "room_1.jpg"
+  },
+  "pricing": {
+    "rent": {
+      "amount": 10000,
+      "currency": "CZK"
+    },
+    "utilities": {
+      "amount": 2000,
+      "currency": "CZK"
+    },
+    "deposit": {
+      "amount": 10000,
+      "currency": "CZK"
+    }
+  },
+  "details": {
+    "floor": 5,
+    "availability": "1.5.2025",
+    "roommates": {
+      "count": 2,
+      "description": "working professionals"
+    }
+  },
+  "host": {
+    "name": "Jan Novak",
+    "age": 25,
+    "ratings": [2, 5],
+    "profileImage": "profile_icon.png"
+  }
+} 
