@@ -1,4 +1,5 @@
 <template>
+<<<<<<< HEAD
   <div class="find_page">
     <h1>Find a Roommate</h1>
     <p>Browse through available rooms and find your perfect roommate.</p>
@@ -31,3 +32,9 @@ p {
   font-size: 18px;
 }
 </style>
+=======
+    <div>
+        <h2>Find a RoomMATE</h2>
+    </div>
+</template>
+>>>>>>> 22586b762a72a05de30e4bd5f1445db922b176be

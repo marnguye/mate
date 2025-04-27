@@ -7,6 +7,7 @@
 /* APP */
 
 * {
+<<<<<<< HEAD
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -17,11 +18,19 @@ body {
     Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+=======
+  box-sizing: border-box;
+  font-family: 'Monserrat', sans-serif;
+  font-size: 32px;
+>>>>>>> 22586b762a72a05de30e4bd5f1445db922b176be
   background-color: var(--secondary-color);
 }
 
 #app {
+<<<<<<< HEAD
   min-height: 100vh;
+=======
+>>>>>>> 22586b762a72a05de30e4bd5f1445db922b176be
   display: flex;
   flex-direction: column;
 } 
