@@ -1,7 +1,7 @@
 /* COLORS */
-:root{
+:root {
   --primary-color: #ffffff;
-  --secondary-color: linear-gradient(360deg,rgba(4, 57, 39, 1) 0%, rgba(0, 100, 0, 1) 86%);
+  --secondary-color: linear-gradient(360deg, rgba(4, 57, 39, 1) 0%, rgba(0, 100, 0, 1) 86%);
   --tertiary-color: #006400;
 }
 
@@ -13,7 +13,8 @@
   box-sizing: border-box;
 }
 
-html, body {
+html,
+body {
   margin: 0;
   padding: 0;
   height: 100%;
@@ -37,4 +38,4 @@ body {
   flex-direction: column;
   background: var(--secondary-color);
   background-attachment: fixed;
-} 
+}
