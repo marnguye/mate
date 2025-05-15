@@ -1,34 +1,42 @@
 <template>
   <div id="app">
     <Header />
-<<<<<<< HEAD
     <main>
       <router-view></router-view>
     </main>
-=======
-    <Card />
->>>>>>> 22586b762a72a05de30e4bd5f1445db922b176be
   </div>
 </template>
 
 <script>
-<<<<<<< HEAD
 import Header from '@/components/Header.vue'
+import Card from './views/Card.vue'
+import Post from './views/Post.vue'
 
-export default {
+export default { 
   name: 'App',
   components: {
-    Header
+    Header,
+    Card,
+    Post
   }
 }
 </script>
 
 <style>
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow: hidden;
+}
+
 #app {
-  min-height: 100vh;
+  height: 100vh;
   display: flex;
   flex-direction: column;
-  background-color: var(--secondary-color);
+  background: var(--secondary-color);
+  background-attachment: fixed;
+  overflow: hidden;
 }
 
 main {
@@ -36,19 +44,9 @@ main {
   display: flex;
   flex-direction: column;
   padding-top: 60px;
+  overflow: hidden;
+  position: relative;
+  background: var(--secondary-color);
+  background-attachment: fixed;
 }
 </style>
-=======
-import Header from './views/Header.vue'
-import Card from './views/Card.vue'
-import PostPage from './views/PostPage.vue'
-export default {
-  name: 'App',
-  components: {
-    Header,
-    Card,
-    PostPage
-  }
-}
-</script>
->>>>>>> 22586b762a72a05de30e4bd5f1445db922b176be

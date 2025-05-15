@@ -1,16 +1,24 @@
 /* COLORS */
 :root{
-  --primary-color: #d9d9d9;
-  --secondary-color: #394d19;
+  --primary-color: #ffffff;
+  --secondary-color: linear-gradient(360deg,rgba(4, 57, 39, 1) 0%, rgba(0, 100, 0, 1) 86%);
+  --tertiary-color: #006400;
 }
 
 /* APP */
 
 * {
-<<<<<<< HEAD
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  background: var(--secondary-color);
+  background-attachment: fixed;
 }
 
 body {
@@ -18,19 +26,15 @@ body {
     Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-=======
   box-sizing: border-box;
   font-family: 'Monserrat', sans-serif;
   font-size: 32px;
->>>>>>> 22586b762a72a05de30e4bd5f1445db922b176be
-  background-color: var(--secondary-color);
 }
 
 #app {
-<<<<<<< HEAD
   min-height: 100vh;
-=======
->>>>>>> 22586b762a72a05de30e4bd5f1445db922b176be
   display: flex;
   flex-direction: column;
+  background: var(--secondary-color);
+  background-attachment: fixed;
 } 

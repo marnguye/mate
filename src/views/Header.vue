@@ -36,14 +36,19 @@
     padding: 8px 16px;
     border: none;
     border-radius: 4px;
-    background-color: var(--secondary-color);
-    color: var(--primary-color);
+    background-color: var(--tertiary-color);
+    color: white;
     cursor: pointer;
     font-size: 16px;
-    transition: opacity 0.2s;
+    transition: all 0.3s ease;
+    font-family: 'Montserrat', sans-serif;
+    text-transform: uppercase;
+    font-weight: 500;
+    letter-spacing: 0.5px;
 }
 
 #post_icon:hover, #find_icon:hover {
-    opacity: 0.9;
+    background-color: #004d00;
+    transform: translateY(-2px);
 }
 </style>
