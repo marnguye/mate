@@ -2,9 +2,9 @@
     <div id="header_container">
         <router-link to="/about" id="logo_icon">MATE</router-link>
         <div id="button_icons">
-            <router-link to="/register" id="register_icon">REGISTER</router-link>
-            <router-link to="/post" id="post_icon">POST</router-link>
             <router-link to="/" id="find_icon">FIND</router-link>
+            <router-link to="/post" id="post_icon">POST</router-link>
+            <router-link to="/register" id="register_icon">REGISTER</router-link>
         </div>
     </div>
 </template>
@@ -55,7 +55,7 @@ export default {
     padding: 8px 16px;
     border: 2px solid var(--primary-color);
     border-radius: 4px;
-    background-color: var(--primary-color);
+    background-color: var(--secondary-color);
     color: #000000;
     cursor: pointer;
     font-size: 16px;
@@ -65,7 +65,7 @@ export default {
 }
 
 #post_icon:hover, #find_icon:hover, #register_icon:hover {
-    background-color: transparent;
+    background-color: var(--secondary-color);
     color: #000000;
     transform: translateY(-2px);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
