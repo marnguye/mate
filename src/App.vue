@@ -11,15 +11,16 @@
 import Header from '@/components/Header.vue'
 import Card from './views/Card.vue'
 import Post from './views/Post.vue'
+import { defineComponent } from 'vue'
 
-export default { 
+export default defineComponent({ 
   name: 'App',
   components: {
     Header,
     Card,
     Post
   }
-}
+})
 </script>
 
 <style>

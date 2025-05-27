@@ -1,10 +1,16 @@
 <template>
-    <div id="header_container">
-        <router-link to="/about" id="logo_icon">MATE</router-link>
-        <div id="button_icons">
-            <router-link to="/" id="find_icon">FIND</router-link>
-            <router-link to="/post" id="post_icon">POST</router-link>
-            <router-link to="/register" id="register_icon">REGISTER</router-link>
+    <div class="header">
+        <router-link to="/about" class="logo">MATE</router-link>
+        <div class="nav-buttons">
+            <router-link to="/" class="nav-button" title="Find">
+                <i class="fas fa-search"></i>
+            </router-link>
+            <router-link to="/post" class="nav-button" title="Post">
+                <i class="fas fa-plus"></i>
+            </router-link>
+            <router-link to="/register" class="nav-button" title="Register">
+                <i class="fas fa-user"></i>
+            </router-link>
         </div>
     </div>
 </template>
@@ -16,7 +22,7 @@ export default {
 </script>
 
 <style scoped>
-#header_container {
+.header {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -31,43 +37,44 @@ export default {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-#logo_icon {
+.logo {
     font-size: 24px;
     font-weight: bold;
-    margin: 0;
-    background-color: var(--primary-color);
     text-decoration: none;
     color: #2A7B9B;
     transition: color 0.3s ease;
 }
 
-#logo_icon:hover {
+.logo:hover {
     color: #5AED97;
 }
 
-#button_icons {
+.nav-buttons {
     display: flex;
-    gap: 20px;
-    background-color: var(--primary-color);
+    gap: 16px;
 }
 
-#post_icon, #find_icon, #register_icon {
-    padding: 8px 16px;
-    border: 2px solid var(--primary-color);
-    border-radius: 4px;
+.nav-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
     background-color: var(--secondary-color);
-    color: #000000;
-    cursor: pointer;
-    font-size: 16px;
-    transition: all 0.3s ease;
+    color: #2A7B9B;
     text-decoration: none;
+    transition: all 0.3s ease;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-#post_icon:hover, #find_icon:hover, #register_icon:hover {
-    background-color: var(--secondary-color);
-    color: #000000;
-    transform: translateY(-2px);
+.nav-button i {
+    font-size: 18px;
+}
+
+.nav-button:hover {
+    transform: scale(1.2);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    color: #5AED97;
 }
 </style>
