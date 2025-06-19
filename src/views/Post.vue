@@ -3,7 +3,7 @@
     <div class="post-content">
       <!-- Left: File Upload Section -->
       <div class="post-upload-section">
-        <h2 class="upload-title">File Upload</h2>
+        <h2 class="upload-title">Upload Photos</h2>
         <div
           class="upload-dropzone"
           :class="{ 'upload-dropzone-active': isDragging }"
@@ -216,14 +216,17 @@
             <button
               type="button"
               class="cancel-btn"
+              @click="handleCancel"
             >
               Cancel
             </button>
             <button
               type="submit"
               class="submit-btn"
+              @click.prevent="handleSubmit"
+              :disabled="isSubmitting"
             >
-              Publish
+              {{ isSubmitting ? 'Publishing...' : 'Publish' }}
             </button>
           </div>
         </div>
@@ -234,8 +237,14 @@
 
 <script setup>
 import { ref, reactive } from 'vue'
+import { useRouter } from 'vue-router'
+import { useToast } from 'vue-toastification'
+import { getSupabaseClient } from '@/lib/supabase'
 
+const router = useRouter()
+const toast = useToast()
 const isDragging = ref(false)
+const isSubmitting = ref(false)
 
 const amenities = [
   { id: 'furnished', label: 'Furnished' },
@@ -307,9 +316,119 @@ const removePhoto = (index) => {
   form.photos.splice(index, 1)
 }
 
-const handleSubmit = () => {
-  // TODO: Implement form submission
-  console.log('Form submitted:', form)
+const handleCancel = () => {
+  router.push('/find')
+}
+
+const uploadPhotos = async (roomId) => {
+  const photoUrls = []
+  
+  const supabase = getSupabaseClient();
+
+  for (const photo of form.photos) {
+    const fileExt = photo.file.name.split('.').pop()
+    const fileName = `${roomId}/${Math.random()}.${fileExt}`
+    const filePath = `rooms/${fileName}`
+
+    try {
+      console.log('Uploading photo:', fileName)
+      const { error: uploadError } = await supabase.storage
+        .from('rooms')
+        .upload(filePath, photo.file)
+
+      if (uploadError) {
+        console.error('Photo upload error:', uploadError)
+        throw uploadError
+      }
+
+      const { data: { publicUrl } } = supabase.storage
+        .from('rooms')
+        .getPublicUrl(filePath)
+
+      console.log('Photo uploaded successfully:', publicUrl)
+      photoUrls.push(publicUrl)
+    } catch (error) {
+      console.error('Error uploading photo:', error)
+      throw error
+    }
+  }
+
+  return photoUrls
+}
+
+const handleSubmit = async () => {
+  try {
+    isSubmitting.value = true
+
+    // Validate required fields
+    if (!form.title || !form.description || !form.rent || !form.floor) {
+      toast.error('Please fill in all required fields')
+      return
+    }
+
+    console.log('Starting form submission...')
+
+    // Get the current user
+    const supabase = getSupabaseClient();
+    const { data: { user }, error: userError } = await supabase.auth.getUser()
+    
+    if (userError) {
+      console.error('Error getting user:', userError)
+      throw userError
+    }
+
+    if (!user) {
+      toast.error('You must be logged in to post a room')
+      router.push('/register')
+      return
+    }
+
+    // Upload photos first
+    let photoUrls = []
+    if (form.photos.length > 0) {
+      console.log('Uploading photos...')
+      photoUrls = await uploadPhotos(Date.now().toString())
+    }
+
+    // Prepare room data
+    const roomData = {
+      title: form.title,
+      description: form.description,
+      rent: form.rent,
+      utilities: form.utilities,
+      deposit: form.deposit,
+      roommates: form.roommates,
+      floor: form.floor,
+      availability: form.availability,
+      amenities: form.amenities,
+      about_me: form.aboutMe,
+      photos: photoUrls,
+      owner_id: user.id // Use owner_id as per foreign key constraint rooms_owner_id_fkey
+    }
+
+    console.log('Inserting room data:', roomData)
+    console.log('User ID being inserted:', user.id)
+
+    // Insert room data into Supabase
+    const { data, error } = await supabase
+      .from('rooms')
+      .insert([roomData])
+      .select()
+
+    if (error) {
+      console.error('Error inserting room data:', error)
+      throw error
+    }
+
+    console.log('Room data inserted successfully:', data)
+    toast.success('Room listing published successfully!')
+    router.push('/find')
+  } catch (error) {
+    console.error('Error publishing room:', error)
+    toast.error('Failed to publish room listing. Please try again.')
+  } finally {
+    isSubmitting.value = false
+  }
 }
 </script>
 
@@ -358,7 +477,7 @@ const handleSubmit = () => {
   display: flex;
   justify-content: center;
   padding: 1.5rem;
-  border: 2px dashed #d1d5db;
+  border: 2px dashed var(--primary-color);
   border-radius: 0.375rem;
   height: 29.5rem;
 }
@@ -376,22 +495,22 @@ const handleSubmit = () => {
   margin: 0 auto;
   height: 3rem;
   width: 3rem;
-  color: #9ca3af;
+  color: var(--primary-color);
 }
 
 .upload-text {
   display: flex;
   font-size: 0.875rem;
-  color: #4b5563;
+  color: #6b7280;
 }
 
 .upload-label {
   position: relative;
   cursor: pointer;
-  background-color: white;
+  background-color: var(--primary-color);
   border-radius: 0.375rem;
   font-weight: 500;
-  color: #2563eb;
+  color: var(--secondary-color);
 }
 
 .upload-label:hover {
@@ -539,9 +658,6 @@ const handleSubmit = () => {
   border-color: #3b82f6;
 }
 
-.aboutMe{
-}
-
 .amenities-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -605,6 +721,11 @@ const handleSubmit = () => {
 
 .submit-btn:hover {
   background-color: #1d4ed8;
+}
+
+.submit-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
 }
 
 @media (max-width: 768px) {

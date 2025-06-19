@@ -14,7 +14,7 @@
                 <button :class="{active: activeTab==='register'}" @click="activeTab='register'">Register</button>
               </div>
               <form class="register-form" @submit.prevent="handleLogin">
-                <button type="button" class="google-btn" @click="handleGoogleAuth('login')">
+                <button type="button" class="google-btn" @click="signInWithGoogle('login')">
                   <img src="https://www.google.com/favicon.ico" alt="Google icon" class="google-icon" /> Continue with Google
                 </button>
                 <div class="form-divider"><span>or</span></div>
@@ -37,7 +37,7 @@
                 <button :class="{active: activeTab==='register'}" @click="activeTab='register'">Register</button>
               </div>
               <form class="register-form" @submit.prevent="handleRegister">
-                <button type="button" class="google-btn" @click="handleGoogleAuth('register')">
+                <button type="button" class="google-btn" @click="signInWithGoogle('register')">
                   <img src="https://www.google.com/favicon.ico" alt="Google icon" class="google-icon" /> Continue with Google
                 </button>
                 <div class="form-divider"><span>or</span></div>
@@ -81,47 +81,67 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: 'Register',
-  data() {
-    return {
-      activeTab: 'register',
-      loginForm: {
-        email: '',
-        password: ''
-      },
-      registerForm: {
-        email: '',
-        phoneCode: '+420',
-        phoneNumber: '',
-        password: '',
-        confirmPassword: '',
-        acceptLegal: false
+<script setup>
+import { ref } from 'vue'
+import { useRouter } from 'vue-router'
+import { useToast } from 'vue-toastification'
+import { getSupabaseClient } from '@/lib/supabase' // Assuming this is correctly implemented
+
+const router = useRouter()
+const toast = useToast()
+
+const activeTab = ref('register')
+
+const loginForm = ref({
+  email: '',
+  password: ''
+})
+
+const registerForm = ref({
+  email: '',
+  phoneCode: '+420',
+  phoneNumber: '',
+  password: '',
+  confirmPassword: '',
+  acceptLegal: false
+})
+
+const handleLogin = () => {
+  // TODO: Implement email/password login logic using Supabase
+  toast.info('Email/password login not yet implemented.')
+}
+
+const handleRegister = () => {
+  if (registerForm.value.password !== registerForm.value.confirmPassword) {
+    toast.error('Passwords do not match!')
+    return
+  }
+  if (!registerForm.value.acceptLegal) {
+    toast.error('You must accept the legal agreements to register.')
+    return
+  }
+  // TODO: Implement email/password registration logic using Supabase
+  toast.info('Email/password registration not yet implemented.')
+}
+
+const signInWithGoogle = async (type) => {
+  try {
+    const supabase = getSupabaseClient()
+    const { error } = await supabase.auth.signInWithOAuth({
+      provider: 'google',
+      options: {
+        redirectTo: window.location.origin + '/' // Redirect to home page after successful login
       }
+    })
+
+    if (error) {
+      console.error('Google Sign-in error:', error)
+      toast.error('Google Sign-in failed: ' + error.message)
     }
-  },
-  methods: {
-    handleLogin() {
-      // TODO: Implement login logic
-      alert('Login submitted!')
-    },
-    handleRegister() {
-      if (this.registerForm.password !== this.registerForm.confirmPassword) {
-        alert('Passwords do not match!')
-        return
-      }
-      if (!this.registerForm.acceptLegal) {
-        alert('You must accept the legal agreements to register.')
-        return
-      }
-      // TODO: Implement registration logic
-      alert('Registration submitted!')
-    },
-    handleGoogleAuth(type) {
-      // TODO: Implement Google authentication
-      alert('Google ' + type + ' clicked!')
-    }
+
+  } catch (error) {
+    console.error('Unexpected Google Sign-in error:', error)
+    toast.error('An unexpected error occurred during Google Sign-in.')
   }
 }
 </script>
